@@ -482,7 +482,7 @@ def wardrobe_management_page():
                                         st.caption(f"✨ 相性: {styles_text}")
                                     
                                     # 詳細情報をexpanderで表示
-                                    with st.expander("💡 組み合わせ提案", key=f"expand_{category}_{item_index}"):
+                                    with st.expander("💡 組み合わせ提案"):
                                         matching = compatibility['matching_items']
                                         
                                         if matching['tops']:
