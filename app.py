@@ -552,43 +552,35 @@ def wardrobe_management_page():
                     name = st.text_input("アイテム名", placeholder="例: デニムジャケット", key="img_name")
                     color = st.text_input("色", placeholder="例: ブルー", key="img_color")
                     
-                    # ブランド選択（古着オプション追加）
-                    brand_method = st.radio(
-                        "ブランド入力",
-                        ["💡 よく使うブランドから選択", "✏️ 自分で入力"],
-                        horizontal=True,
-                        key="img_brand_method"
+                    # ブランド選択（古着オプション + その他自由入力）
+                    brand_choice = st.selectbox(
+                        "ブランド",
+                        ['ユニクロ', 'GU', 'ZARA', 'H&M', '無印良品', 'WEGO', 'ビームス', '古着', 'その他（自分で入力）'],
+                        key="img_brand_choice"
                     )
                     
-                    if brand_method == "💡 よく使うブランドから選択":
-                        brand = st.selectbox(
-                            "ブランドを選択",
-                            ['ユニクロ', 'GU', 'ZARA', 'H&M', '無印良品', 'WEGO', 'ビームス', '古着'],
-                            key="img_brand_select"
-                        )
+                    # 「その他」を選んだ場合は自由入力
+                    if brand_choice == 'その他（自分で入力）':
+                        brand = st.text_input("ブランド名を入力", placeholder="例: ナイキ、アディダスなど", key="img_brand_custom")
                     else:
-                        brand = st.text_input("ブランド名", placeholder="例: ユニクロ、古着など", key="img_brand_input")
+                        brand = brand_choice
         else:
             st.write("### ✏️ 手動で入力")
             name = st.text_input("アイテム名", placeholder="例: デニムジャケット")
             color = st.text_input("色", placeholder="例: ブルー")
             
-            # ブランド選択（古着オプション追加）
-            brand_method = st.radio(
-                "ブランド入力",
-                ["💡 よく使うブランドから選択", "✏️ 自分で入力"],
-                horizontal=True,
-                key="manual_brand_method"
+            # ブランド選択（古着オプション + その他自由入力）
+            brand_choice = st.selectbox(
+                "ブランド",
+                ['ユニクロ', 'GU', 'ZARA', 'H&M', '無印良品', 'WEGO', 'ビームス', '古着', 'その他（自分で入力）'],
+                key="manual_brand_choice"
             )
             
-            if brand_method == "💡 よく使うブランドから選択":
-                brand = st.selectbox(
-                    "ブランドを選択",
-                    ['ユニクロ', 'GU', 'ZARA', 'H&M', '無印良品', 'WEGO', 'ビームス', '古着'],
-                    key="manual_brand_select"
-                )
+            # 「その他」を選んだ場合は自由入力
+            if brand_choice == 'その他（自分で入力）':
+                brand = st.text_input("ブランド名を入力", placeholder="例: ナイキ、アディダスなど", key="manual_brand_custom")
             else:
-                brand = st.text_input("ブランド名", placeholder="例: ユニクロ、古着など", key="manual_brand_input")
+                brand = brand_choice
         
         style = st.selectbox(
             "スタイル",
