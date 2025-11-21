@@ -410,6 +410,12 @@ def display_outfit(outfit):
     st.markdown("### 💡 このコーデを選んだ理由")
     for idx, reason in enumerate(outfit['reasoning'], 1):
         st.write(f"{idx}. {reason}")
+    
+    # おしゃれになるワンポイントアドバイス
+    if outfit.get('fashion_tip'):
+        st.markdown("---")
+        st.markdown("### ✨ おしゃれになるワンポイントアドバイス")
+        st.success(outfit['fashion_tip'])
 
 
 def wardrobe_management_page():
@@ -950,6 +956,12 @@ def favorite_item_outfit_page():
             st.markdown("### 👔 スタイリングのコツ")
             for tip in outfit['styling_tips']:
                 st.info(tip)
+        
+        # おしゃれになるワンポイントアドバイス
+        if outfit.get('fashion_tip'):
+            st.markdown("---")
+            st.markdown("### ✨ おしゃれになるワンポイントアドバイス")
+            st.success(outfit['fashion_tip'])
 
 
 def main_page():
