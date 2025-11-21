@@ -451,6 +451,7 @@ def wardrobe_management_page():
                         for j, col in enumerate(cols):
                             if i + j < len(items):
                                 item = items[i + j]
+                                item_index = i + j  # グリッド内のインデックス
                                 with col:
                                     # 画像がある場合は表示
                                     if item.get('image_path') and os.path.exists(item['image_path']):
@@ -481,7 +482,7 @@ def wardrobe_management_page():
                                         st.caption(f"✨ 相性: {styles_text}")
                                     
                                     # 詳細情報をexpanderで表示
-                                    with st.expander("💡 組み合わせ提案"):
+                                    with st.expander("💡 組み合わせ提案", key=f"expand_{category}_{item_index}"):
                                         matching = compatibility['matching_items']
                                         
                                         if matching['tops']:
@@ -503,7 +504,7 @@ def wardrobe_management_page():
                                         if matching['tips']:
                                             st.info("\n\n".join(matching['tips']))
                                     
-                                    if st.button("🗑️ 削除", key=f"del_{category}_{item['id']}"):
+                                    if st.button("🗑️ 削除", key=f"del_{category}_{item_index}_{item.get('id', '')}"):
                                         manager.remove_item(category, item['id'])
                                         st.rerun()
                 else:
