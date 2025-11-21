@@ -594,13 +594,14 @@ class OutfitRecommender:
         
         return filtered
     
-    def _select_item(self, items: List[Dict], preferences: List[str]) -> Optional[Dict]:
+    def _select_item(self, items: List[Dict], preferences: List[str], exclude_ids: List[str] = None) -> Optional[Dict]:
         """
-        推奨に基づいてアイテムを選択
+        推奨に基づいてアイテムを選択（履歴を考慮してランダムに選択）
         
         Args:
             items: アイテムリスト
             preferences: 推奨アイテムタイプのリスト
+            exclude_ids: 除外するアイテムのIDリスト（最近使ったアイテム）
         
         Returns:
             選択されたアイテム、なければNone
@@ -608,17 +609,30 @@ class OutfitRecommender:
         if not items:
             return None
         
+        # 除外リストがあれば、それを除いたアイテムから選択
+        if exclude_ids:
+            available_items = [item for item in items if item.get('id') not in exclude_ids]
+            # 除外後にアイテムがなければ、除外なしで選択
+            if not available_items:
+                available_items = items
+        else:
+            available_items = items
+        
         # 推奨に合うアイテムを探す
+        matching_items = []
         for pref in preferences:
             matching = [
-                item for item in items
+                item for item in available_items
                 if pref.lower() in item.get('name', '').lower()
             ]
-            if matching:
-                return random.choice(matching)
+            matching_items.extend(matching)
         
-        # 推奨に合うものがなければランダムに選択
-        return random.choice(items) if items else None
+        # 推奨に合うものがあればその中からランダムに選択
+        if matching_items:
+            return random.choice(matching_items)
+        
+        # 推奨に合うものがなければ全てからランダムに選択
+        return random.choice(available_items) if available_items else None
     
     def _find_accessory(self, accessories: List[Dict], acc_type: str) -> Optional[Dict]:
         """

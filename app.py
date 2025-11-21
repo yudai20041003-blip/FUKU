@@ -955,6 +955,14 @@ def favorite_item_outfit_page():
             st.markdown("---")
             st.markdown("### ✨ おしゃれになるワンポイントアドバイス")
             st.success(outfit['fashion_tip'])
+        
+        # 別のコーディネートを見るボタン
+        st.markdown("---")
+        col_refresh1, col_refresh2, col_refresh3 = st.columns([1, 2, 1])
+        with col_refresh2:
+            if st.button("🔄 このアイテムで別のコーデを見る", type="secondary", use_container_width=True, key="refresh_fav"):
+                # 同じアイテムで再生成
+                st.rerun()
 
 
 def main_page():
@@ -1196,6 +1204,14 @@ def main_page():
                 
                 # コーディネートを表示
                 display_outfit(outfit)
+                
+                # 別のコーディネートを見るボタン
+                st.markdown("---")
+                col_refresh1, col_refresh2, col_refresh3 = st.columns([1, 2, 1])
+                with col_refresh2:
+                    if st.button("🔄 別のコーデを見る", type="secondary", use_container_width=True):
+                        # 同じ条件で再生成（ランダム性により違うコーデになる）
+                        st.rerun()
                 
                 # インスピレーションリンク
                 st.markdown("### ✨ インスピレーション")
